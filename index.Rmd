@@ -1,0 +1,51 @@
+---
+title: "Top car companies in 2016"
+date: "18 June, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(leaflet)
+topcar_df <- data.frame( name = c(
+    "<a href='http://www.toyota.com'>Toyota</a>", 
+    "<a href='https://www.gm.com'>General Motors</a>", 
+    "<a href='https://www.daimler.com/en'>Daimler</a>",
+    "<a href='http://www.hyundai.com/in/en/Main/index.html'>Hyundai</a>",
+    "<a href='http://world.honda.com'>Honda</a>",
+    "<a href='http://www.nissan-global.com'>Nissan</a>",
+    "<a href='http://www.ford.com'>Ford</a>",
+    "<a href='http://en.volkswagen.com/en.html'>Volkswagen</a>",
+    "<a href='https://www.bmw.com/en/home.html'>BMW</a>",
+    "<a href='https://www.fcagroup.com'>Fiat Chrysler</a>"),
+    lat = c(35.0824, 42.3314, 48.7758, 37.5665, 35.6581,
+            35.4437, 42.3223, 52.4227, 48.172832642,
+            42.6875),
+    lng = c(137.1562, -83.0458, 9.1829, 126.9780,
+            139.7516, 139.6380, -83.1763,  10.7865,
+            11.555997776, -83.2341),
+    net_income = c(19995, 9687, 9519, 5533, 4687, 4210,
+                   7343, 1549,7197,426)
+                  )
+
+topcar_df %>%
+    leaflet() %>%
+    addTiles() %>%
+    addMarkers(lat = topcar_df$lat, lng = topcar_df$lng,
+               popup = topcar_df$name) %>%
+    addCircleMarkers(weight = 1,
+                     radius = 0.1*sqrt(topcar_df$net_income),
+                     lat = topcar_df$lat, lng = topcar_df$lng)
+
+```
+
+Source of data:
+
+* [Net income (indicated by circles)](http://www.mbaskool.com/fun-corner/top-brand-lists/16164-top-10-automobile-companies-in-the-world-2016.html)
+
+* Coordinates by basic Google search.
+
+
